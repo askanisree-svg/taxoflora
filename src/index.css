@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap");
+
+:root {
+  font-family: "DM Sans", sans-serif;
+
+  --forest-950: #03110b;
+  --forest-900: #06150f;
+  --forest-850: #081a12;
+  --forest-800: #0a2016;
+  --forest-700: #103522;
+
+  --green: #91e86f;
+  --green-bright: #a8f27f;
+  --green-dark: #28663d;
+
+  --cream: #f5f3e9;
+  --white: #ffffff;
+
+  --text: #f4f5ed;
+  --muted: #aab5ad;
+  --muted-dark: #77857c;
+
+  --border: rgba(220, 255, 215, 0.14);
+  --border-light: rgba(255, 255, 255, 0.1);
+
+  --container: 1440px;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--forest-950);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--forest-950);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: "DM Sans", sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--green);
+  color: #06150f;
+}

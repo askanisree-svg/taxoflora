@@ -1,0 +1,406 @@
+.herbarium-section {
+  min-height: 100vh;
+  padding: 145px 0;
+
+  background: #07150e;
+  overflow: hidden;
+}
+
+.herbarium-bg {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      rgba(4, 18, 12, 0.97) 0%,
+      rgba(4, 18, 12, 0.86) 48%,
+      rgba(4, 18, 12, 0.94) 100%
+    ),
+    url("/assets/hero/herbarium-bg.webp");
+
+  background-size: cover;
+  background-position: center;
+
+  opacity: 0.95;
+}
+
+.herbarium-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.herbarium-intro {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  align-items: center;
+  gap: 80px;
+
+  margin-bottom: 70px;
+}
+
+.herbarium-copy {
+  max-width: 760px;
+}
+
+.herbarium-copy .eyebrow {
+  margin-bottom: 24px;
+}
+
+.herbarium-copy h2 {
+  color: var(--white);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(54px, 6vw, 88px);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+
+.herbarium-copy h2 em {
+  display: block;
+  color: var(--green);
+  font-weight: 500;
+}
+
+.herbarium-copy > p {
+  max-width: 610px;
+  margin-top: 27px;
+
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.herbarium-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 25px;
+
+  margin-top: 34px;
+}
+
+.herbarium-tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #809087;
+  font-size: 11px;
+}
+
+.herbarium-tech svg {
+  color: var(--green);
+}
+
+.herbarium-symbol {
+  display: flex;
+  justify-content: center;
+}
+
+.herbarium-circle {
+  position: relative;
+
+  width: 280px;
+  height: 280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 17px;
+
+  border: 1px solid rgba(145, 232, 111, 0.18);
+  border-radius: 50%;
+
+  color: rgba(145, 232, 111, 0.65);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(145, 232, 111, 0.11),
+      rgba(3, 17, 11, 0.1) 65%
+    );
+
+  box-shadow:
+    0 0 100px rgba(145, 232, 111, 0.07),
+    inset 0 0 60px rgba(145, 232, 111, 0.04);
+}
+
+.herbarium-circle::before,
+.herbarium-circle::after {
+  content: "";
+  position: absolute;
+
+  border: 1px solid rgba(145, 232, 111, 0.08);
+  border-radius: 50%;
+}
+
+.herbarium-circle::before {
+  inset: 20px;
+}
+
+.herbarium-circle::after {
+  inset: -18px;
+}
+
+.herbarium-circle span {
+  color: rgba(213, 236, 209, 0.55);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.herbarium-records {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.specimen-record {
+  min-height: 430px;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+
+  background: rgba(4, 20, 13, 0.68);
+  backdrop-filter: blur(14px);
+
+  transition:
+    transform 0.4s ease,
+    border-color 0.4s ease,
+    background 0.4s ease;
+}
+
+.specimen-record:hover {
+  transform: translateY(-8px);
+
+  border-color: rgba(145, 232, 111, 0.25);
+  background: rgba(6, 27, 17, 0.82);
+}
+
+.specimen-visual {
+  position: relative;
+  height: 215px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(145, 232, 111, 0.14),
+      transparent 42%
+    ),
+    linear-gradient(
+      145deg,
+      #173624,
+      #091b12
+    );
+}
+
+.specimen-visual::before {
+  content: "";
+
+  position: absolute;
+  width: 170px;
+  height: 170px;
+
+  border: 1px solid rgba(145, 232, 111, 0.09);
+  border-radius: 50%;
+}
+
+.specimen-leaf {
+  position: relative;
+  z-index: 2;
+
+  width: 110px;
+  height: 110px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(145, 232, 111, 0.18);
+  border-radius: 50%;
+
+  color: rgba(145, 232, 111, 0.75);
+  background: rgba(145, 232, 111, 0.06);
+}
+
+.record-id {
+  position: absolute;
+  top: 17px;
+  left: 17px;
+
+  padding: 7px 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+
+  color: #a4b1a9;
+  background: rgba(3, 17, 11, 0.45);
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.specimen-content {
+  padding: 23px;
+}
+
+.record-label {
+  color: var(--green);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+}
+
+.specimen-content h3 {
+  margin-top: 8px;
+
+  color: var(--white);
+  font-family: "Playfair Display", serif;
+  font-size: 27px;
+  font-weight: 500;
+}
+
+.specimen-content > em {
+  display: block;
+  margin-top: 3px;
+
+  color: #819087;
+  font-size: 11px;
+}
+
+.specimen-details {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  margin-top: 19px;
+}
+
+.specimen-details div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #89978e;
+  font-size: 10px;
+}
+
+.specimen-details svg {
+  color: var(--green);
+}
+
+.record-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: 20px;
+
+  color: #dbe8dd;
+  background: transparent;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: color 0.25s ease;
+}
+
+.record-link:hover {
+  color: var(--green);
+}
+
+.herbarium-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  margin-top: 50px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.herbarium-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 26px 25px;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.herbarium-stat:first-child {
+  padding-left: 0;
+}
+
+.herbarium-stat:last-child {
+  border-right: 0;
+}
+
+.herbarium-stat strong {
+  color: var(--white);
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.herbarium-stat span {
+  color: #74837a;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+@media (max-width: 1000px) {
+  .herbarium-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .herbarium-symbol {
+    display: none;
+  }
+
+  .herbarium-records {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .herbarium-section {
+    padding: 100px 0;
+  }
+
+  .herbarium-copy h2 {
+    font-size: clamp(50px, 14vw, 72px);
+  }
+
+  .herbarium-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .herbarium-records {
+    grid-template-columns: 1fr;
+  }
+
+  .herbarium-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .herbarium-stat,
+  .herbarium-stat:first-child {
+    padding: 20px 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .herbarium-stat:last-child {
+    border-bottom: 0;
+  }
+}

@@ -1,0 +1,1094 @@
+/* =========================================================
+   BIODIVERSITY MAP SECTION
+   ========================================================= */
+
+.biodiversity-section {
+  position: relative;
+
+  width: 100%;
+
+  height: 680px;
+  min-height: 680px;
+
+  overflow: hidden;
+
+  background: #06150f;
+}
+
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.biodiversity-bg {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(3, 18, 11, 0.88) 0%,
+      rgba(3, 18, 11, 0.68) 40%,
+      rgba(3, 18, 11, 0.30) 72%,
+      rgba(3, 18, 11, 0.45) 100%
+    ),
+    url("/assets/hero/map-bg.webp");
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  background-position: center;
+}
+
+
+/* =========================================================
+   INNER
+   ========================================================= */
+
+.biodiversity-inner {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(
+    calc(100% - 88px),
+    1500px
+  );
+
+  height: 100%;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(400px, 0.78fr)
+    minmax(580px, 1.22fr);
+
+  align-items: center;
+
+  gap: 45px;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+   ========================================================= */
+
+.biodiversity-content {
+  max-width: 650px;
+}
+
+
+.biodiversity-eyebrow {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #a8f27f;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.17em;
+
+  text-transform: uppercase;
+}
+
+
+.biodiversity-content h2 {
+  margin-top: 18px;
+
+  color: #f7f5ed;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size:
+    clamp(50px, 5vw, 74px);
+
+  font-weight: 500;
+
+  line-height: 0.96;
+
+  letter-spacing: -0.045em;
+}
+
+
+.biodiversity-content h2 em {
+  color: #a8f27f;
+
+  font-style: italic;
+}
+
+
+.biodiversity-content > p {
+  max-width: 560px;
+
+  margin-top: 21px;
+
+  color:
+    rgba(232, 241, 234, 0.75);
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.biodiversity-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 26px;
+}
+
+
+.biodiversity-primary {
+  min-height: 52px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 0 18px;
+
+  border-radius: 11px;
+
+  color: #07140c;
+
+  background: #a8f27f;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 14px 40px
+    rgba(145, 232, 111, 0.16);
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+
+.biodiversity-primary:hover {
+  transform: translateY(-3px);
+
+  background: #b7fa8b;
+}
+
+
+.biodiversity-secondary {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #edf5ee;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  transition: color 0.25s ease;
+}
+
+
+.biodiversity-secondary:hover {
+  color: #a8f27f;
+}
+
+
+.biodiversity-play {
+  width: 30px;
+
+  height: 30px;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.5);
+
+  border-radius: 50%;
+
+  color: #a8f27f;
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.biodiversity-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 8px;
+
+  margin-top: 29px;
+}
+
+
+.biodiversity-stat {
+  min-height: 95px;
+
+  padding: 14px 12px;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.18);
+
+  border-radius: 14px;
+
+  background:
+    rgba(3, 25, 15, 0.43);
+
+  backdrop-filter: blur(9px);
+
+  -webkit-backdrop-filter: blur(9px);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+
+.biodiversity-stat:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(168, 242, 127, 0.38);
+}
+
+
+.biodiversity-stat svg {
+  color: #a8f27f;
+}
+
+
+.biodiversity-stat strong {
+  display: block;
+
+  margin-top: 8px;
+
+  color: #ffffff;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 23px;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.biodiversity-stat span {
+  display: block;
+
+  margin-top: 5px;
+
+  color:
+    rgba(216, 230, 218, 0.65);
+
+  font-size: 6.5px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  letter-spacing: 0.05em;
+}
+
+
+/* =========================================================
+   MAP WRAPPER
+   ========================================================= */
+
+.biodiversity-map-wrapper {
+  position: relative;
+
+  width: 100%;
+
+  height: 550px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.30);
+
+  border-radius: 28px;
+
+  background: #203026;
+
+  box-shadow:
+    0 30px 75px
+    rgba(0, 0, 0, 0.35),
+    0 0 50px
+    rgba(145, 232, 111, 0.05);
+}
+
+
+/* =========================================================
+   LEAFLET
+   ========================================================= */
+
+.biodiversity-map {
+  position: absolute !important;
+
+  inset: 0;
+
+  z-index: 1;
+
+  width: 100% !important;
+
+  height: 100% !important;
+
+  background: #203026;
+}
+
+
+/* =========================================================
+   MAP TOP BAR
+   ========================================================= */
+
+.map-topbar {
+  position: absolute;
+
+  top: 16px;
+
+  left: 16px;
+
+  right: 16px;
+
+  z-index: 1000;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 9px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   OBSERVATION COUNT
+   ========================================================= */
+
+.map-observation-count {
+  min-height: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 8px 12px;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.27);
+
+  border-radius: 14px;
+
+  background:
+    rgba(3, 25, 15, 0.78);
+
+  backdrop-filter: blur(13px);
+
+  -webkit-backdrop-filter: blur(13px);
+
+  pointer-events: auto;
+}
+
+
+.map-count-icon {
+  width: 36px;
+
+  height: 36px;
+
+  display: grid;
+
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  color: #07140c;
+
+  background: #a8f27f;
+}
+
+
+.map-observation-count strong {
+  display: block;
+
+  color: #ffffff;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 24px;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.map-observation-count span {
+  display: block;
+
+  margin-top: 3px;
+
+  color:
+    rgba(224, 237, 226, 0.70);
+
+  font-size: 7px;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.map-search {
+  width: 215px;
+
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 12px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.18);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.91);
+
+  color: #3c493f;
+
+  pointer-events: auto;
+}
+
+
+.map-search input {
+  width: 100%;
+
+  min-width: 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #26352c;
+
+  font-size: 10px;
+}
+
+
+.map-search input::placeholder {
+  color: #7c877f;
+}
+
+
+.map-search-clear {
+  width: 20px;
+
+  height: 20px;
+
+  display: grid;
+
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  color: #526058;
+
+  background: #e2e8e3;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   REGION
+   ========================================================= */
+
+.map-region {
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0 13px;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.35);
+
+  border-radius: 12px;
+
+  color: #ffffff;
+
+  background:
+    rgba(3, 25, 15, 0.80);
+
+  backdrop-filter: blur(13px);
+
+  -webkit-backdrop-filter: blur(13px);
+
+  font-size: 9px;
+
+  font-weight: 700;
+}
+
+
+.map-region svg {
+  color: #a8f27f;
+}
+
+
+/* =========================================================
+   SEARCH RESULT
+   ========================================================= */
+
+.map-search-result {
+  position: absolute;
+
+  top: 84px;
+
+  right: 16px;
+
+  z-index: 1001;
+
+  min-height: 34px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0 11px;
+
+  border-radius: 9px;
+
+  background:
+    rgba(3, 25, 15, 0.88);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+
+  font-size: 8px;
+
+  font-weight: 700;
+}
+
+
+.map-search-result.found {
+  color: #a8f27f;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.25);
+}
+
+
+.map-search-result.not-found {
+  color: #ffd1d1;
+
+  border:
+    1px solid
+    rgba(255, 130, 130, 0.22);
+}
+
+
+/* =========================================================
+   POPUP
+   ========================================================= */
+
+.biodiversity-map-wrapper
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+
+  background:
+    rgba(3, 25, 15, 0.97);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0, 0, 0, 0.30);
+}
+
+
+.biodiversity-map-wrapper
+.leaflet-popup-tip {
+  background: #06190f;
+}
+
+
+.biodiversity-map-wrapper
+.leaflet-popup-content {
+  margin: 12px 14px;
+}
+
+
+/* =========================================================
+   POPUP
+   ========================================================= */
+
+.map-popup {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  min-width: 190px;
+}
+
+
+.map-popup-icon {
+  width: 30px;
+
+  height: 30px;
+
+  display: grid;
+
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  color: #07140c;
+
+  background: #a8f27f;
+}
+
+
+.map-popup-info strong {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 13px;
+}
+
+
+.map-popup-info em {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a8f27f;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 10px;
+}
+
+
+.map-popup-info > span {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #aab8ad;
+
+  font-size: 9px;
+}
+
+
+.map-popup-location {
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  margin-top: 7px;
+
+  color: #c6d4c9;
+
+  font-size: 8px;
+}
+
+
+.map-popup-location svg {
+  color: #a8f27f;
+}
+
+
+.map-popup-coordinates {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 7px;
+
+  margin-top: 9px;
+}
+
+
+.map-popup-coordinates > div {
+  padding: 7px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  border-radius: 7px;
+
+  background:
+    rgba(255, 255, 255, 0.03);
+}
+
+
+.map-popup-coordinates small {
+  display: block;
+
+  color: #718178;
+
+  font-size: 6px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+
+.map-popup-coordinates strong {
+  margin-top: 3px;
+
+  color: #dce7de;
+
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   ZOOM
+   ========================================================= */
+
+.biodiversity-map-wrapper
+.leaflet-control-zoom {
+  margin-right: 15px !important;
+
+  margin-bottom: 15px !important;
+
+  overflow: hidden;
+
+  border: none !important;
+
+  border-radius: 11px !important;
+
+  box-shadow:
+    0 10px 25px
+    rgba(0, 0, 0, 0.25) !important;
+}
+
+
+.biodiversity-map-wrapper
+.leaflet-control-zoom a {
+  width: 36px !important;
+
+  height: 36px !important;
+
+  display: grid !important;
+
+  place-items: center;
+
+  border: none !important;
+
+  color: #203529 !important;
+
+  background:
+    rgba(255, 255, 255, 0.93) !important;
+}
+
+
+.biodiversity-map-wrapper
+.leaflet-control-zoom a:hover {
+  color: #07140c !important;
+
+  background: #a8f27f !important;
+}
+
+
+/* =========================================================
+   LEGEND
+   ========================================================= */
+
+.map-legend {
+  position: absolute;
+
+  left: 16px;
+
+  bottom: 16px;
+
+  z-index: 1000;
+
+  min-height: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0 12px;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.20);
+
+  border-radius: 9px;
+
+  color: #eef6ef;
+
+  background:
+    rgba(3, 25, 15, 0.82);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+
+  font-size: 8px;
+
+  font-weight: 600;
+}
+
+
+.map-legend-dot {
+  width: 8px;
+
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #a8f27f;
+
+  box-shadow:
+    0 0 12px
+    rgba(168, 242, 127, 0.8);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .biodiversity-inner {
+    width: calc(100% - 64px);
+
+    grid-template-columns:
+      minmax(350px, 0.75fr)
+      minmax(470px, 1.25fr);
+
+    gap: 30px;
+  }
+
+  .biodiversity-content h2 {
+    font-size: 54px;
+  }
+
+  .biodiversity-map-wrapper {
+    height: 520px;
+  }
+
+  .map-search {
+    width: 175px;
+  }
+
+}
+
+
+/* =========================================================
+   STACK
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+  .biodiversity-section {
+    height: auto;
+
+    min-height: 1000px;
+
+    padding: 85px 0;
+  }
+
+  .biodiversity-inner {
+    width: calc(100% - 48px);
+
+    height: auto;
+
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+  }
+
+  .biodiversity-map-wrapper {
+    height: 500px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .biodiversity-section {
+    min-height: auto;
+
+    padding: 70px 0;
+  }
+
+  .biodiversity-inner {
+    width: calc(100% - 30px);
+  }
+
+  .biodiversity-content h2 {
+    font-size:
+      clamp(42px, 12vw, 58px);
+  }
+
+  .biodiversity-content > p {
+    font-size: 13px;
+  }
+
+  .biodiversity-actions {
+    flex-wrap: wrap;
+  }
+
+  .biodiversity-stats {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .biodiversity-map-wrapper {
+    height: 440px;
+
+    border-radius: 21px;
+  }
+
+  .map-topbar {
+    flex-wrap: wrap;
+
+    top: 11px;
+
+    left: 11px;
+
+    right: 11px;
+  }
+
+  .map-search {
+    width: calc(100% - 135px);
+
+    order: 3;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+  .biodiversity-section {
+    padding: 60px 0;
+  }
+
+  .biodiversity-map-wrapper {
+    height: 400px;
+  }
+
+  .biodiversity-stats {
+    gap: 7px;
+  }
+
+  .biodiversity-stat {
+    min-height: 88px;
+
+    padding: 12px 10px;
+  }
+
+  .biodiversity-stat strong {
+    font-size: 20px;
+  }
+
+  .biodiversity-stat span {
+    font-size: 6px;
+  }
+
+  .map-search {
+    width: 100%;
+  }
+
+}

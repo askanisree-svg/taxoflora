@@ -1,0 +1,1210 @@
+/* =========================================================
+   TAXOFLORA
+   PREMIUM BOTANICAL HERO
+   ========================================================= */
+
+
+/* =========================================================
+   HERO SECTION
+   ========================================================= */
+
+.hero {
+  position: relative;
+
+  width: 100%;
+
+  /*
+    Controlled desktop Hero height.
+    Header + content + statistics all fit inside this.
+  */
+
+  height: 820px;
+
+  min-height: 820px;
+
+  overflow: hidden;
+
+  background:
+    #06170d;
+}
+
+
+/* =========================================================
+   BACKGROUND IMAGE
+   ========================================================= */
+
+.hero-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  background-image:
+    url("/assets/hero/hero-bg.webp");
+
+  background-repeat: no-repeat;
+
+  /*
+    The uploaded image remains the actual background.
+  */
+
+  background-size: cover;
+
+  background-position:
+    center center;
+
+  /*
+    IMPORTANT:
+    No blur.
+    No filter.
+    No transform.
+  */
+
+  filter: none;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   DARK GRADIENT
+   ========================================================= */
+
+.hero-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+
+      rgba(2, 15, 8, 0.79)
+      0%,
+
+      rgba(2, 15, 8, 0.60)
+      25%,
+
+      rgba(2, 15, 8, 0.26)
+      51%,
+
+      rgba(2, 15, 8, 0.10)
+      72%,
+
+      rgba(2, 15, 8, 0.19)
+      100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.hero-container {
+  position: relative;
+
+  z-index: 10;
+
+  width: min(
+    calc(100% - 96px),
+    1500px
+  );
+
+  min-height: 680px;
+
+  margin:
+    0 auto;
+
+  padding-top: 145px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(390px, 0.80fr);
+
+  gap: 40px;
+
+  align-items: center;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+   ========================================================= */
+
+.hero-content {
+  width: 100%;
+
+  max-width: 720px;
+
+  padding-bottom: 45px;
+}
+
+
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.hero-eyebrow {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 13px;
+
+  color:
+    rgba(237, 243, 238, 0.88);
+
+  font-size: 11px;
+
+  font-weight: 500;
+
+  letter-spacing:
+    0.22em;
+
+  line-height:
+    1.9;
+
+  text-transform:
+    uppercase;
+}
+
+
+.hero-eyebrow-line {
+  width: 27px;
+
+  height: 1px;
+
+  margin-top: 9px;
+
+  flex-shrink: 0;
+
+  background:
+    #a8f27f;
+}
+
+
+.hero-eyebrow div {
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.hero-content h1 {
+  max-width: 730px;
+
+  margin-top: 24px;
+
+  color:
+    #f7f5ed;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size:
+    clamp(61px, 5.65vw, 89px);
+
+  font-weight:
+    500;
+
+  line-height:
+    0.95;
+
+  letter-spacing:
+    -0.047em;
+}
+
+
+.hero-content h1 em {
+  color:
+    #a8f27f;
+
+  font-style:
+    normal;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.hero-description {
+  max-width: 590px;
+
+  margin-top: 26px;
+
+  color:
+    rgba(243, 247, 243, 0.87);
+
+  font-size: 16px;
+
+  font-weight: 400;
+
+  line-height:
+    1.65;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.hero-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-top: 29px;
+}
+
+
+.hero-button {
+  min-height: 56px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  padding:
+    0 19px;
+
+  border-radius: 12px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* PRIMARY */
+
+.hero-button-primary {
+  color:
+    #07140c;
+
+  background:
+    #a8f27f;
+
+  box-shadow:
+    0 14px 42px
+    rgba(145, 232, 111, 0.17);
+}
+
+
+.hero-button-primary:hover {
+  transform:
+    translateY(-3px);
+
+  background:
+    #b5fa8b;
+
+  box-shadow:
+    0 20px 52px
+    rgba(145, 232, 111, 0.27);
+}
+
+
+/* SECONDARY */
+
+.hero-button-secondary {
+  color:
+    #f4f7f3;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.56);
+
+  background:
+    rgba(2, 20, 10, 0.12);
+
+  backdrop-filter:
+    blur(3px);
+
+  -webkit-backdrop-filter:
+    blur(3px);
+}
+
+
+.hero-button-secondary:hover {
+  transform:
+    translateY(-3px);
+
+  border-color:
+    #a8f27f;
+
+  background:
+    rgba(168, 242, 127, 0.08);
+}
+
+
+/* =========================================================
+   THREE FEATURES
+   ========================================================= */
+
+.hero-features {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 25px;
+
+  max-width: 705px;
+
+  margin-top: 43px;
+}
+
+
+.hero-feature {
+  display: grid;
+
+  grid-template-columns:
+    38px 1fr;
+
+  gap: 10px;
+
+  min-width: 0;
+}
+
+
+.hero-feature-icon {
+  width: 35px;
+  height: 35px;
+
+  display: grid;
+
+  place-items: center;
+
+  color:
+    #a8f27f;
+}
+
+
+.hero-feature-copy strong {
+  display: block;
+
+  color:
+    #a8f27f;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing:
+    0.15em;
+}
+
+
+.hero-feature-copy p {
+  max-width: 170px;
+
+  margin-top: 7px;
+
+  color:
+    rgba(222, 233, 224, 0.77);
+
+  font-size: 9px;
+
+  line-height:
+    1.55;
+}
+
+
+/* =========================================================
+   RIGHT VISUAL
+   ========================================================= */
+
+.hero-visual {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 570px;
+
+  justify-self: end;
+}
+
+
+/* =========================================================
+   SPECIMEN CARD
+   ========================================================= */
+
+.hero-specimen-card {
+  position: absolute;
+
+  top: 72px;
+
+  right: 0;
+
+  width: 248px;
+
+  padding:
+    24px 22px;
+
+  border:
+    1px solid
+    rgba(220, 255, 211, 0.36);
+
+  border-radius: 17px;
+
+  /*
+    Glass effect ONLY on card.
+    Background photograph remains sharp.
+  */
+
+  background:
+    rgba(4, 26, 13, 0.38);
+
+  backdrop-filter:
+    blur(11px);
+
+  -webkit-backdrop-filter:
+    blur(11px);
+
+  box-shadow:
+    0 25px 70px
+    rgba(0, 0, 0, 0.23);
+
+  z-index: 20;
+}
+
+
+/* =========================================================
+   SPECIMEN HEADER
+   ========================================================= */
+
+.specimen-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+
+.specimen-header h2 {
+  color:
+    #f6f4ed;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 29px;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.specimen-header em {
+  display: block;
+
+  margin-top: 6px;
+
+  color:
+    #aab8ad;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 12px;
+
+  font-style: italic;
+}
+
+
+/* =========================================================
+   SPECIMEN ARROW
+   ========================================================= */
+
+.specimen-arrow {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+
+  place-items: center;
+
+  flex-shrink: 0;
+
+  color:
+    #a8f27f;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.25);
+
+  border-radius: 50%;
+
+  background:
+    rgba(145, 232, 111, 0.05);
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   FAMILY LABEL
+   ========================================================= */
+
+.specimen-family {
+  display: inline-flex;
+
+  margin-top: 15px;
+
+  padding:
+    5px 10px;
+
+  border:
+    1px solid
+    rgba(168, 242, 127, 0.32);
+
+  border-radius: 99px;
+
+  color:
+    #a8f27f;
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  letter-spacing:
+    0.14em;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.specimen-divider {
+  width: 100%;
+
+  height: 1px;
+
+  margin:
+    18px 0;
+
+  background:
+    rgba(255, 255, 255, 0.10);
+}
+
+
+/* =========================================================
+   SPECIMEN DETAIL
+   ========================================================= */
+
+.specimen-detail {
+  display: grid;
+
+  grid-template-columns:
+    28px 1fr;
+
+  gap: 10px;
+
+  align-items: center;
+
+  margin-top: 16px;
+
+  color:
+    #a8f27f;
+}
+
+
+.specimen-detail div {
+  min-width: 0;
+}
+
+
+.specimen-detail span {
+  display: block;
+
+  color:
+    #7d9083;
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  letter-spacing:
+    0.13em;
+}
+
+
+.specimen-detail strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color:
+    #e3ebe4;
+
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   QUOTE
+   ========================================================= */
+
+.hero-quote {
+  position: absolute;
+
+  right: 0;
+
+  bottom: 62px;
+
+  z-index: 15;
+
+  width: 300px;
+}
+
+
+.hero-quote p {
+  color:
+    rgba(249, 247, 239, 0.94);
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 17px;
+
+  font-style: italic;
+
+  line-height:
+    1.45;
+}
+
+
+.hero-quote span {
+  display: block;
+
+  width: 42px;
+
+  height: 2px;
+
+  margin-top: 15px;
+
+  background:
+    #f5f2e9;
+}
+
+
+/* =========================================================
+   BOTTOM STATISTICS
+   ========================================================= */
+
+.hero-statistics {
+  position: absolute;
+
+  z-index: 30;
+
+  left: 50%;
+
+  bottom: 24px;
+
+  transform:
+    translateX(-50%);
+
+  width: min(
+    calc(100% - 96px),
+    1500px
+  );
+
+  min-height: 76px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  align-items: center;
+
+  border-top:
+    1px solid
+    rgba(211, 241, 207, 0.16);
+
+  padding-top: 10px;
+}
+
+
+/* =========================================================
+   STAT
+   ========================================================= */
+
+.hero-stat {
+  min-height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding:
+    0 28px;
+
+  border-right:
+    1px solid
+    rgba(211, 241, 207, 0.15);
+}
+
+
+.hero-stat:first-child {
+  padding-left: 0;
+}
+
+
+.hero-stat:last-child {
+  border-right: none;
+}
+
+
+.hero-stat svg {
+  flex-shrink: 0;
+
+  color:
+    #a8f27f;
+}
+
+
+.hero-stat strong {
+  display: block;
+
+  color:
+    #f5f4ed;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 29px;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.hero-stat span {
+  display: block;
+
+  margin-top: 5px;
+
+  color:
+    rgba(211, 224, 213, 0.67);
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  letter-spacing:
+    0.11em;
+}
+
+
+/* =========================================================
+   NO WHITE CURVE
+   ========================================================= */
+
+/*
+  IMPORTANT:
+  There is intentionally NO .hero-bottom-curve.
+*/
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1500px) {
+
+  .hero {
+    height: 850px;
+
+    min-height: 850px;
+  }
+
+  .hero-container {
+    min-height: 715px;
+
+    padding-top: 155px;
+  }
+
+  .hero-content h1 {
+    font-size: 90px;
+  }
+
+}
+
+
+/* =========================================================
+   LAPTOP
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .hero {
+    height: 780px;
+
+    min-height: 780px;
+  }
+
+  .hero-container {
+    width:
+      calc(100% - 64px);
+
+    min-height: 670px;
+
+    padding-top: 130px;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(330px, 0.72fr);
+
+    gap: 25px;
+  }
+
+  .hero-content h1 {
+    font-size:
+      clamp(52px, 6vw, 76px);
+  }
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+  .hero-features {
+    gap: 13px;
+  }
+
+  .hero-feature-copy p {
+    font-size: 8px;
+  }
+
+  .hero-specimen-card {
+    width: 225px;
+  }
+
+  .hero-statistics {
+    width:
+      calc(100% - 64px);
+  }
+
+  .hero-stat {
+    padding:
+      0 18px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+  .hero {
+    height: auto;
+
+    min-height: 1000px;
+
+    padding-bottom: 35px;
+  }
+
+  .hero-container {
+    min-height: auto;
+
+    padding-top: 125px;
+
+    grid-template-columns:
+      1fr;
+
+    gap: 40px;
+  }
+
+  .hero-content {
+    max-width: 760px;
+
+    padding-bottom: 0;
+  }
+
+  .hero-visual {
+    width: 100%;
+
+    max-width: 650px;
+
+    min-height: 500px;
+
+    margin: 0 auto;
+  }
+
+  .hero-statistics {
+    position: relative;
+
+    left: auto;
+
+    bottom: auto;
+
+    transform: none;
+
+    width:
+      calc(100% - 64px);
+
+    margin:
+      20px auto 0;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero-container {
+    width:
+      calc(100% - 40px);
+  }
+
+  .hero-content h1 {
+    font-size:
+      clamp(48px, 10vw, 67px);
+  }
+
+  .hero-features {
+    grid-template-columns:
+      1fr;
+
+    gap: 18px;
+  }
+
+  .hero-feature-copy p {
+    max-width: 350px;
+
+    font-size: 10px;
+  }
+
+  .hero-statistics {
+    width:
+      calc(100% - 40px);
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    row-gap: 15px;
+
+    border-top:
+      1px solid
+      rgba(211, 241, 207, 0.16);
+  }
+
+  .hero-stat {
+    min-height: 55px;
+
+    padding:
+      0 15px;
+  }
+
+  .hero-stat:nth-child(2) {
+    border-right: none;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+  .hero {
+    padding-bottom: 25px;
+  }
+
+  .hero-container {
+    width:
+      calc(100% - 30px);
+
+    padding-top: 100px;
+
+    gap: 30px;
+  }
+
+  .hero-eyebrow {
+    font-size: 8px;
+
+    letter-spacing:
+      0.16em;
+  }
+
+  .hero-content h1 {
+    margin-top: 19px;
+
+    font-size:
+      clamp(42px, 13vw, 59px);
+
+    line-height:
+      0.98;
+  }
+
+  .hero-description {
+    margin-top: 20px;
+
+    font-size: 13px;
+
+    line-height:
+      1.7;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 9px;
+  }
+
+  .hero-button {
+    width: 100%;
+  }
+
+
+  /* RIGHT VISUAL */
+
+  .hero-visual {
+    min-height: 430px;
+  }
+
+  .hero-specimen-card {
+    top: 15px;
+
+    right: 0;
+
+    width: 215px;
+
+    padding:
+      18px;
+  }
+
+  .specimen-header h2 {
+    font-size: 24px;
+  }
+
+  .specimen-header em {
+    font-size: 10px;
+  }
+
+  .specimen-detail {
+    margin-top: 12px;
+  }
+
+  .hero-quote {
+    left: 0;
+
+    right: auto;
+
+    bottom: 12px;
+
+    width: 235px;
+  }
+
+  .hero-quote p {
+    font-size: 13px;
+  }
+
+
+  /* STATISTICS */
+
+  .hero-statistics {
+    width:
+      calc(100% - 30px);
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    margin-top: 10px;
+  }
+
+  .hero-stat {
+    gap: 7px;
+
+    padding:
+      0 8px;
+  }
+
+  .hero-stat:first-child {
+    padding-left: 0;
+  }
+
+  .hero-stat strong {
+    font-size: 22px;
+  }
+
+  .hero-stat span {
+    font-size: 6px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero-content h1 {
+    font-size: 41px;
+  }
+
+  .hero-specimen-card {
+    width: 200px;
+  }
+
+  .hero-stat strong {
+    font-size: 20px;
+  }
+
+}

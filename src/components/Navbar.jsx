@@ -74,7 +74,7 @@ function Navbar() {
 
 
           <a
-            href="#contribute"
+            href="/add-specimen"
             className="nav-cta"
             onClick={closeMenu}
           >

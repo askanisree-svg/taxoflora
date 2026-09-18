@@ -5,6 +5,7 @@ import {
   Play,
   Search,
   TreePine,
+  X,
 } from "lucide-react";
 
 import {
@@ -15,39 +16,151 @@ import {
   ZoomControl,
 } from "react-leaflet";
 
-import { useMemo, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useMemo, useState } from "react";
 
 import "leaflet/dist/leaflet.css";
 import "../css/BiodiversityMap.css";
 
-import plants from "../data/plants";
+import { db } from "../firebase";
+
+
+// ============================================================
+// CONSERVATION STATUS COLORS
+// ============================================================
+
+const STATUS_COLORS = {
+  endangered: "#EF4444",
+  "critically endangered": "#DC2626",
+
+  vulnerable: "#F97316",
+
+  rare: "#A855F7",
+
+  threatened: "#EAB308",
+
+  common: "#22C55E",
+
+  recorded: "#3B82F6",
+
+  "least concern": "#22C55E",
+
+  "near threatened": "#EAB308",
+
+  unknown: "#94A3B8",
+};
+
+
+// ============================================================
+// GET MARKER COLOR FROM CONSERVATION STATUS
+// ============================================================
+
+function getStatusColor(status) {
+  if (!status) {
+    return STATUS_COLORS.unknown;
+  }
+
+  const normalizedStatus = status
+    .toString()
+    .trim()
+    .toLowerCase();
+
+  return (
+    STATUS_COLORS[normalizedStatus] ||
+    STATUS_COLORS.unknown
+  );
+}
+
+
+// ============================================================
+// COMPONENT
+// ============================================================
 
 function BiodiversityMap() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [firestorePlants, setFirestorePlants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  /*
-   * =========================================================
-   * SEARCH
-   * =========================================================
-   *
-   * Searches:
-   * - Common name
-   * - Scientific name
-   * - Family
-   * - Genus
-   *
-   */
 
-  const searchResults = useMemo(() => {
-    const query = searchTerm.trim().toLowerCase();
+  // ==========================================================
+  // LOAD PLANTS FROM FIRESTORE
+  // ==========================================================
 
-    if (!query) {
-      return plants;
+  useEffect(() => {
+    async function loadPlants() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const snapshot = await getDocs(
+          collection(db, "plants")
+        );
+
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setFirestorePlants(data);
+
+        console.log(
+          "✅ Biodiversity Map loaded:",
+          data.length,
+          "plants"
+        );
+      } catch (err) {
+        console.error(
+          "❌ Failed to load plants from Firestore:",
+          err
+        );
+
+        setError(
+          "Unable to load biodiversity data from Firestore."
+        );
+      } finally {
+        setLoading(false);
+      }
     }
 
-    return plants.filter((plant) => {
+    loadPlants();
+  }, []);
+
+
+  // ==========================================================
+  // AVAILABLE CONSERVATION STATUSES
+  // ==========================================================
+
+  const statuses = useMemo(() => {
+    return [
+      ...new Set(
+        firestorePlants
+          .map((plant) => plant.status)
+          .filter(Boolean)
+      ),
+    ];
+  }, [firestorePlants]);
+
+
+  // ==========================================================
+  // SEARCH
+  // ==========================================================
+
+  const searchResults = useMemo(() => {
+    const query = searchTerm
+      .trim()
+      .toLowerCase();
+
+    if (!query) {
+      return firestorePlants;
+    }
+
+    return firestorePlants.filter((plant) => {
       const commonName =
         plant.commonName?.toLowerCase() || "";
+
+      const localName =
+        plant.localName?.toLowerCase() || "";
 
       const scientificName =
         plant.scientificName?.toLowerCase() || "";
@@ -58,37 +171,162 @@ function BiodiversityMap() {
       const genus =
         plant.genus?.toLowerCase() || "";
 
+      const species =
+        plant.species?.toLowerCase() || "";
+
+      const location =
+        plant.location?.toLowerCase() || "";
+
+      const state =
+        plant.state?.toLowerCase() || "";
+
+      const status =
+        plant.status?.toLowerCase() || "";
+
       return (
         commonName.includes(query) ||
+        localName.includes(query) ||
         scientificName.includes(query) ||
         family.includes(query) ||
-        genus.includes(query)
+        genus.includes(query) ||
+        species.includes(query) ||
+        location.includes(query) ||
+        state.includes(query) ||
+        status.includes(query)
       );
     });
-  }, [searchTerm]);
+  }, [searchTerm, firestorePlants]);
 
 
-  /*
-   * =========================================================
-   * STATISTICS
-   * =========================================================
-   */
+  // ==========================================================
+  // STATISTICS
+  // ==========================================================
 
-  const plantCount = plants.length;
+  const plantCount = firestorePlants.length;
 
   const locationCount = new Set(
-    plants.map(
-      (plant) =>
-        `${plant.latitude},${plant.longitude}`
-    )
+    firestorePlants
+      .filter(
+        (plant) =>
+          Number.isFinite(
+            Number(plant.latitude)
+          ) &&
+          Number.isFinite(
+            Number(plant.longitude)
+          )
+      )
+      .map(
+        (plant) =>
+          `${plant.latitude},${plant.longitude}`
+      )
   ).size;
 
   const familyCount = new Set(
-    plants
+    firestorePlants
       .map((plant) => plant.family)
       .filter(Boolean)
   ).size;
 
+
+  // ==========================================================
+  // LOADING
+  // ==========================================================
+
+  if (loading) {
+    return (
+      <section
+        className="biodiversity-section"
+        id="map"
+      >
+        <div className="biodiversity-bg" />
+
+        <div className="biodiversity-inner section-inner">
+
+          <div className="biodiversity-content">
+
+            <div className="biodiversity-eyebrow">
+              <Leaf size={15} />
+
+              <span>
+                LIVE BIODIVERSITY MAP
+              </span>
+            </div>
+
+            <h2>
+              Explore Flora
+              <br />
+              Across <em>Telangana.</em>
+            </h2>
+
+            <p>
+              Loading botanical observations from
+              the TAXOFLORA digital archive...
+            </p>
+
+          </div>
+
+
+          <div className="biodiversity-map-wrapper biodiversity-loading">
+
+            <Leaf size={34} />
+
+            <span>
+              Loading biodiversity data...
+            </span>
+
+          </div>
+
+        </div>
+      </section>
+    );
+  }
+
+
+  // ==========================================================
+  // ERROR
+  // ==========================================================
+
+  if (error) {
+    return (
+      <section
+        className="biodiversity-section"
+        id="map"
+      >
+        <div className="biodiversity-bg" />
+
+        <div className="biodiversity-inner section-inner">
+
+          <div className="biodiversity-content">
+
+            <div className="biodiversity-eyebrow">
+              <Leaf size={15} />
+
+              <span>
+                LIVE BIODIVERSITY MAP
+              </span>
+            </div>
+
+            <h2>
+              Explore Flora
+              <br />
+              Across <em>Telangana.</em>
+            </h2>
+
+            <p>
+              {error}
+            </p>
+
+          </div>
+
+        </div>
+      </section>
+    );
+  }
+
+
+  // ==========================================================
+  // MAIN
+  // ==========================================================
 
   return (
     <section
@@ -96,31 +334,30 @@ function BiodiversityMap() {
       id="map"
     >
 
-      {/* =====================================================
-          BACKGROUND
-          ===================================================== */}
+      {/* BACKGROUND */}
 
       <div className="biodiversity-bg" />
 
 
-      {/* =====================================================
-          MAIN CONTENT
-          ===================================================== */}
+      {/* MAIN CONTENT */}
 
       <div className="biodiversity-inner section-inner">
 
 
-        {/* ===================================================
+        {/* ====================================================
             LEFT CONTENT
-            =================================================== */}
+            ==================================================== */}
 
         <div className="biodiversity-content">
 
           <div className="biodiversity-eyebrow">
+
             <Leaf size={15} />
+
             <span>
               LIVE BIODIVERSITY MAP
             </span>
+
           </div>
 
 
@@ -132,16 +369,15 @@ function BiodiversityMap() {
 
 
           <p>
-            Discover plant observations plotted using
-            geographic coordinates. Search the TAXOFLORA
-            collection by plant name, scientific name,
-            family, or genus.
+            Discover plant habitats plotted using
+            geographic coordinates. Search the
+            TAXOFLORA collection by plant name,
+            scientific name, family, genus,
+            region, or conservation status.
           </p>
 
 
-          {/* =================================================
-              BUTTONS
-              ================================================= */}
+          {/* BUTTONS */}
 
           <div className="biodiversity-actions">
 
@@ -163,10 +399,12 @@ function BiodiversityMap() {
             >
 
               <span className="biodiversity-play">
+
                 <Play
                   size={11}
                   fill="currentColor"
                 />
+
               </span>
 
               <span>
@@ -178,9 +416,7 @@ function BiodiversityMap() {
           </div>
 
 
-          {/* =================================================
-              STATISTICS
-              ================================================= */}
+          {/* STATISTICS */}
 
           <div className="biodiversity-stats">
 
@@ -248,21 +484,19 @@ function BiodiversityMap() {
         </div>
 
 
-        {/* ===================================================
+        {/* ====================================================
             RIGHT MAP
-            =================================================== */}
+            ==================================================== */}
 
         <div className="biodiversity-map-wrapper">
 
 
-          {/* =================================================
-              MAP TOP BAR
-              ================================================= */}
+          {/* MAP TOP BAR */}
 
           <div className="map-topbar">
 
 
-            {/* OBSERVATION COUNT */}
+            {/* OBSERVATIONS */}
 
             <div className="map-observation-count">
 
@@ -295,13 +529,16 @@ function BiodiversityMap() {
                 type="search"
                 value={searchTerm}
                 onChange={(event) =>
-                  setSearchTerm(event.target.value)
+                  setSearchTerm(
+                    event.target.value
+                  )
                 }
                 placeholder="Search plant..."
                 aria-label="Search plant"
               />
 
               {searchTerm && (
+
                 <button
                   type="button"
                   className="map-search-clear"
@@ -310,8 +547,11 @@ function BiodiversityMap() {
                   }
                   aria-label="Clear search"
                 >
-                  ×
+
+                  <X size={14} />
+
                 </button>
+
               )}
 
             </div>
@@ -332,9 +572,7 @@ function BiodiversityMap() {
           </div>
 
 
-          {/* =================================================
-              SEARCH RESULT
-              ================================================= */}
+          {/* SEARCH RESULT */}
 
           {searchTerm.trim() && (
 
@@ -347,6 +585,7 @@ function BiodiversityMap() {
             >
 
               {searchResults.length > 0 ? (
+
                 <>
                   <Leaf size={14} />
 
@@ -358,7 +597,9 @@ function BiodiversityMap() {
                     found
                   </span>
                 </>
+
               ) : (
+
                 <>
                   <Search size={14} />
 
@@ -366,6 +607,7 @@ function BiodiversityMap() {
                     Plant Not Found
                   </span>
                 </>
+
               )}
 
             </div>
@@ -373,9 +615,9 @@ function BiodiversityMap() {
           )}
 
 
-          {/* =================================================
+          {/* ==================================================
               LEAFLET MAP
-              ================================================= */}
+              ================================================== */}
 
           <MapContainer
             center={[
@@ -400,7 +642,7 @@ function BiodiversityMap() {
 
 
             {/* =================================================
-                PLANT MARKERS
+                PLANT HABITAT MARKERS
                 ================================================= */}
 
             {searchResults.map((plant) => {
@@ -411,9 +653,8 @@ function BiodiversityMap() {
               const longitude =
                 Number(plant.longitude);
 
-              /*
-               * Don't render invalid GPS records.
-               */
+
+              // Ignore invalid GPS records.
 
               if (
                 !Number.isFinite(latitude) ||
@@ -421,6 +662,16 @@ function BiodiversityMap() {
               ) {
                 return null;
               }
+
+
+              // Marker color is based on
+              // conservation status.
+
+              const statusColor =
+                getStatusColor(
+                  plant.status
+                );
+
 
               return (
 
@@ -430,12 +681,12 @@ function BiodiversityMap() {
                     latitude,
                     longitude,
                   ]}
-                  radius={8}
+                  radius={9}
                   pathOptions={{
                     color: "#ffffff",
                     weight: 2,
-                    fillColor: "#a8f27f",
-                    fillOpacity: 1,
+                    fillColor: statusColor,
+                    fillOpacity: 0.95,
                   }}
                 >
 
@@ -443,8 +694,16 @@ function BiodiversityMap() {
 
                     <div className="map-popup">
 
-                      <div className="map-popup-icon">
+                      <div
+                        className="map-popup-icon"
+                        style={{
+                          backgroundColor:
+                            statusColor,
+                        }}
+                      >
+
                         <Leaf size={15} />
+
                       </div>
 
 
@@ -457,34 +716,53 @@ function BiodiversityMap() {
 
 
                         {plant.scientificName && (
+
                           <em>
                             {plant.scientificName}
                           </em>
+
                         )}
 
 
                         {plant.family && (
+
                           <span>
                             Family:{" "}
                             {plant.family}
                           </span>
+
+                        )}
+
+
+                        {plant.status && (
+
+                          <span>
+                            Conservation Status:{" "}
+                            <strong>
+                              {plant.status}
+                            </strong>
+                          </span>
+
                         )}
 
 
                         <div className="map-popup-location">
+
                           <MapPin size={11} />
 
                           <span>
                             {plant.location ||
                               plant.state ||
-                              "Field observation"}
+                              "Field habitat"}
                           </span>
+
                         </div>
 
 
                         <div className="map-popup-coordinates">
 
                           <div>
+
                             <small>
                               LATITUDE
                             </small>
@@ -492,10 +770,12 @@ function BiodiversityMap() {
                             <strong>
                               {plant.latitude}
                             </strong>
+
                           </div>
 
 
                           <div>
+
                             <small>
                               LONGITUDE
                             </small>
@@ -503,6 +783,7 @@ function BiodiversityMap() {
                             <strong>
                               {plant.longitude}
                             </strong>
+
                           </div>
 
                         </div>
@@ -516,26 +797,78 @@ function BiodiversityMap() {
                 </CircleMarker>
 
               );
+
             })}
 
           </MapContainer>
 
 
-          {/* =================================================
-              LEGEND
-              ================================================= */}
+          {/* ==================================================
+              CONSERVATION STATUS LEGEND
+              ================================================== */}
 
           <div className="map-legend">
 
-            <span className="map-legend-dot" />
+            <div className="map-legend-title">
 
-            <span>
-              {searchResults.length}{" "}
-              {searchResults.length === 1
-                ? "Plant"
-                : "Plants"}{" "}
-              Visible
-            </span>
+              <span>
+                CONSERVATION STATUS
+              </span>
+
+            </div>
+
+
+            <div className="map-legend-items">
+
+              {statuses.map((status) => {
+
+                const statusColor =
+                  getStatusColor(status);
+
+                return (
+
+                  <div
+                    className="map-legend-item"
+                    key={status}
+                  >
+
+                    <span
+                      className="map-legend-dot"
+                      style={{
+                        backgroundColor:
+                          statusColor,
+
+                        boxShadow:
+                          `0 0 0 2px ${statusColor}22`,
+                      }}
+                    />
+
+                    <span>
+                      {status}
+                    </span>
+
+                  </div>
+
+                );
+
+              })}
+
+            </div>
+
+
+            <div className="map-legend-visible">
+
+              <span>
+                {searchResults.length}
+              </span>
+
+              <span>
+                {searchResults.length === 1
+                  ? "Plant Visible"
+                  : "Plants Visible"}
+              </span>
+
+            </div>
 
           </div>
 

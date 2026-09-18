@@ -1,4 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+
 import {
   Search,
   ArrowUpRight,
@@ -7,34 +10,149 @@ import {
   X,
 } from "lucide-react";
 
-import plants from "../data/plants";
 import "../css/ExploreFlora.css";
 
 function ExploreFlora() {
   const [search, setSearch] = useState("");
+  const [firestorePlants, setFirestorePlants] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // =========================================
+  // LOAD PLANTS FROM FIRESTORE
+  // =========================================
+
+  useEffect(() => {
+    async function loadPlants() {
+      try {
+        const snapshot = await getDocs(
+          collection(db, "plants")
+        );
+
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setFirestorePlants(data);
+
+        console.log(
+          "✅ Explore Flora loaded:",
+          data.length,
+          "plants"
+        );
+      } catch (error) {
+        console.error(
+          "❌ Failed to load plants from Firestore:",
+          error
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadPlants();
+  }, []);
+
+  // =========================================
+  // SEARCH / FILTER
+  // =========================================
 
   const filteredPlants = useMemo(() => {
     const query = search.trim().toLowerCase();
 
     // HOME PAGE:
-    // No search = show ONLY 4 plants
+    // No search = show only first 4 plants
     if (!query) {
-      return plants.slice(0, 4);
+      return firestorePlants.slice(0, 4);
     }
 
     // SEARCH:
-    // Search the COMPLETE database of 100+ plants
-    return plants.filter((plant) => {
+    // Search the complete Firestore collection
+    return firestorePlants.filter((plant) => {
       return (
-        plant.commonName?.toLowerCase().includes(query) ||
-        plant.scientificName?.toLowerCase().includes(query) ||
-        plant.family?.toLowerCase().includes(query) ||
-        plant.genus?.toLowerCase().includes(query) ||
-        plant.location?.toLowerCase().includes(query) ||
-        plant.state?.toLowerCase().includes(query)
+        plant.commonName
+          ?.toLowerCase()
+          .includes(query) ||
+
+        plant.localName
+          ?.toLowerCase()
+          .includes(query) ||
+
+        plant.scientificName
+          ?.toLowerCase()
+          .includes(query) ||
+
+        plant.family
+          ?.toLowerCase()
+          .includes(query) ||
+
+        plant.genus
+          ?.toLowerCase()
+          .includes(query) ||
+
+        plant.species
+          ?.toLowerCase()
+          .includes(query) ||
+
+        plant.location
+          ?.toLowerCase()
+          .includes(query) ||
+
+        plant.state
+          ?.toLowerCase()
+          .includes(query) ||
+
+        plant.habitat
+          ?.toLowerCase()
+          .includes(query)
       );
     });
-  }, [search]);
+  }, [search, firestorePlants]);
+
+  // =========================================
+  // LOADING
+  // =========================================
+
+  if (loading) {
+    return (
+      <section
+        className="explore-section section"
+        id="explore"
+      >
+        <div className="explore-bg" />
+
+        <div className="explore-inner section-inner">
+          <div className="section-heading explore-heading">
+            <span>EXPLORE OUR FLORA</span>
+
+            <h2>
+              A Living Archive of
+              <em> Regional Flora.</em>
+            </h2>
+
+            <p>
+              Loading botanical observations from
+              the TAXOFLORA digital archive...
+            </p>
+          </div>
+
+          <div className="explore-meta">
+            <div>
+              <span>COLLECTION</span>
+
+              <strong>
+                Loading Plant Observations...
+              </strong>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // =========================================
+  // RENDER
+  // =========================================
 
   return (
     <section
@@ -46,12 +164,11 @@ function ExploreFlora() {
 
       <div className="explore-inner section-inner">
 
-        {/* ================================
+        {/* =================================
             HEADING
-        ================================= */}
+        ================================== */}
 
         <div className="section-heading explore-heading">
-
           <span>
             EXPLORE OUR FLORA
           </span>
@@ -66,18 +183,14 @@ function ExploreFlora() {
             from the field, organized into a searchable
             digital collection.
           </p>
-
         </div>
 
-
-        {/* ================================
+        {/* =================================
             SEARCH
-        ================================= */}
+        ================================== */}
 
         <div className="explore-toolbar">
-
           <div className="explore-search">
-
             <Search size={18} />
 
             <input
@@ -100,33 +213,25 @@ function ExploreFlora() {
                 <X size={16} />
               </button>
             )}
-
           </div>
-
         </div>
 
-
-        {/* ================================
+        {/* =================================
             META
-        ================================= */}
+        ================================== */}
 
         <div className="explore-meta">
-
           <div>
-
             <span>
               COLLECTION
             </span>
 
             <strong>
-              {plants.length}+ Plant Observations
+              {firestorePlants.length}+ Plant Observations
             </strong>
-
           </div>
 
-
           <div className="explore-view">
-
             <Leaf size={16} />
 
             <span>
@@ -134,18 +239,14 @@ function ExploreFlora() {
                 ? `${filteredPlants.length} Results`
                 : "Featured Collection"}
             </span>
-
           </div>
-
         </div>
 
-
-        {/* ================================
+        {/* =================================
             NOT FOUND
-        ================================= */}
+        ================================== */}
 
         {filteredPlants.length === 0 ? (
-
           <div className="explore-not-found">
 
             <div className="explore-not-found-icon">
@@ -171,146 +272,149 @@ function ExploreFlora() {
             </button>
 
           </div>
-
         ) : (
 
-          /* ================================
+          /* =================================
               PLANT GRID
-          ================================= */
+          ================================== */
 
           <div className="flora-grid">
 
-            {filteredPlants.map((plant, index) => (
+            {filteredPlants.map((plant, index) => {
 
-              <article
-                className="flora-card"
-                key={plant.id}
-              >
+              const actualIndex =
+                firestorePlants.findIndex(
+                  (item) => item.id === plant.id
+                );
 
-                {/* IMAGE */}
+              return (
+                <article
+                  className="flora-card"
+                  key={plant.id}
+                >
 
-                <div className="flora-image">
+                  {/* IMAGE */}
 
-                  {plant.image ? (
+                  <div className="flora-image">
 
-                    <img
-                      src={plant.image}
-                      alt={
-                        plant.commonName ||
-                        "Plant specimen"
-                      }
-                    />
-
-                  ) : (
-
-                    <div className="flora-placeholder">
-
-                      <Leaf
-                        size={48}
-                        strokeWidth={1}
+                    {plant.image ? (
+                      <img
+                        src={plant.image}
+                        alt={
+                          plant.commonName ||
+                          "Plant specimen"
+                        }
+                        onError={(event) => {
+                          event.currentTarget.style.display =
+                            "none";
+                        }}
                       />
+                    ) : (
+                      <div className="flora-placeholder">
 
-                      <span>
-                        {plant.commonName ||
-                          `PLANT ${index + 1}`}
-                      </span>
+                        <Leaf
+                          size={48}
+                          strokeWidth={1}
+                        />
 
-                    </div>
+                        <span>
+                          {plant.commonName ||
+                            `PLANT ${index + 1}`}
+                        </span>
 
-                  )}
+                      </div>
+                    )}
 
-                  <div className="flora-image-overlay" />
+                    <div className="flora-image-overlay" />
 
+                    {/* NUMBER */}
 
-                  {/* NUMBER */}
+                    <span className="flora-number">
+                      {String(
+                        actualIndex + 1
+                      ).padStart(2, "0")}
+                    </span>
 
-                  <span className="flora-number">
+                    {/* ARROW */}
 
-                    {String(
-                      plants.findIndex(
-                        (item) =>
-                          item.id === plant.id
-                      ) + 1
-                    ).padStart(2, "0")}
+                    <a
+                      href="/collection"
+                      className="flora-arrow"
+                      aria-label={`View ${
+                        plant.commonName ||
+                        "plant"
+                      }`}
+                    >
+                      <ArrowUpRight size={17} />
+                    </a>
 
-                  </span>
+                  </div>
 
+                  {/* CONTENT */}
 
-                  {/* ARROW */}
+                  <div className="flora-card-content">
 
-                  <a
-                    href="/collection"
-                    className="flora-arrow"
-                    aria-label={`View ${
-                      plant.commonName ||
-                      "plant"
-                    }`}
-                  >
-                    <ArrowUpRight size={17} />
-                  </a>
+                    <span className="flora-family">
+                      {plant.family ||
+                        "Plant Family"}
+                    </span>
 
-                </div>
+                    <h3>
+                      {plant.commonName ||
+                        "Unnamed Plant"}
+                    </h3>
 
+                    <em>
+                      {plant.scientificName ||
+                        "Scientific name unavailable"}
+                    </em>
 
-                {/* CONTENT */}
+                    {/* LOCAL NAME */}
 
-                <div className="flora-card-content">
+                    {plant.localName && (
+                      <div className="flora-local-name">
+                        Local name:{" "}
+                        <strong>
+                          {plant.localName}
+                        </strong>
+                      </div>
+                    )}
 
-                  <span className="flora-family">
-                    {plant.family ||
-                      "Plant Family"}
-                  </span>
+                    {/* COORDINATES */}
 
+                    <div className="flora-location">
 
-                  <h3>
-                    {plant.commonName ||
-                      "Unnamed Plant"}
-                  </h3>
+                      <MapPin size={14} />
 
+                      <div>
 
-                  <em>
-                    {plant.scientificName ||
-                      "Scientific name unavailable"}
-                  </em>
+                        <span>
+                          Coordinates
+                        </span>
 
+                        <strong>
+                          {plant.latitude !== undefined &&
+                          plant.longitude !== undefined
+                            ? `${plant.latitude}, ${plant.longitude}`
+                            : "Not available"}
+                        </strong>
 
-                  {/* COORDINATES */}
-
-                  <div className="flora-location">
-
-                    <MapPin size={14} />
-
-                    <div>
-
-                      <span>
-                        Coordinates
-                      </span>
-
-                      <strong>
-                        {plant.latitude !== undefined &&
-                        plant.longitude !== undefined
-                          ? `${plant.latitude}, ${plant.longitude}`
-                          : "Not available"}
-                      </strong>
+                      </div>
 
                     </div>
 
                   </div>
 
-                </div>
-
-              </article>
-
-            ))}
+                </article>
+              );
+            })}
 
           </div>
-
         )}
 
-
-        {/* ================================
+        {/* =================================
             FOOTER
-        ================================= */}
+        ================================== */}
 
         <div className="explore-footer">
 
@@ -322,11 +426,12 @@ function ExploreFlora() {
                     : "observations"
                 }`
               : `Showing ${Math.min(
-                  plants.length,
+                  firestorePlants.length,
                   4
-                )} featured plants of ${plants.length}+ observations`}
+                )} featured plants of ${
+                  firestorePlants.length
+                }+ observations`}
           </span>
-
 
           <a
             href="/collection"
@@ -340,7 +445,6 @@ function ExploreFlora() {
         </div>
 
       </div>
-
     </section>
   );
 }

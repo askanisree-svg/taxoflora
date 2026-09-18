@@ -1092,3 +1092,167 @@
   }
 
 }
+/* =========================================================
+   COMPACT FAMILY LEGEND
+   ========================================================= */
+
+.map-legend {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  top: auto;
+
+  z-index: 1000;
+
+  width: auto;
+  max-width: calc(100% - 40px);
+
+  padding: 12px 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  background: rgba(5, 25, 16, 0.88);
+  border: 1px solid rgba(168, 242, 127, 0.22);
+  border-radius: 14px;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+  overflow: hidden;
+}
+
+
+/* Legend title */
+
+.map-legend-title {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.map-legend-title span {
+  color: #91e86f;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+
+/* Family items */
+
+.map-legend-items {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  max-width: 620px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scrollbar-width: thin;
+}
+
+.map-legend-items::-webkit-scrollbar {
+  height: 4px;
+}
+
+.map-legend-items::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.map-legend-items::-webkit-scrollbar-thumb {
+  background: rgba(145, 232, 111, 0.35);
+  border-radius: 20px;
+}
+
+
+/* Individual family */
+
+.map-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  flex: 0 0 auto;
+
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+
+/* Colored dot */
+
+.map-legend-dot {
+  width: 9px;
+  height: 9px;
+
+  flex: 0 0 9px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+
+/* Visible count */
+
+.map-legend-visible {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  flex: 0 0 auto;
+
+  padding-left: 12px;
+
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.map-legend-visible span:first-child {
+  color: #91e86f;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .map-legend {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+
+    max-width: none;
+
+    padding: 10px 12px;
+
+    gap: 10px;
+  }
+
+  .map-legend-items {
+    max-width: none;
+    flex: 1;
+  }
+
+  .map-legend-visible {
+    display: none;
+  }
+
+}
